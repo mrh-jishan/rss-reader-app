@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'rss-side-nav',
@@ -6,16 +6,9 @@ import {Component, OnInit, Output, EventEmitter} from '@angular/core';
   styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent implements OnInit {
-
-  @Output() sidenavClose = new EventEmitter();
-
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
-  public onSidenavClose = () => {
-    this.sidenavClose.emit();
-  }
-
 }

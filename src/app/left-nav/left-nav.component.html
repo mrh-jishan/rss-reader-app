@@ -1,0 +1,43 @@
+
+<mat-selection-list [multiple]="false">
+  <div mat-subheader>Feeder</div>
+
+  <mat-list-option>
+    <mat-icon mat-list-icon>inbox</mat-icon>
+    <div mat-line>All Posts</div>
+  </mat-list-option>
+
+  <mat-list-option>
+    <mat-icon mat-list-icon>all_inbox</mat-icon>
+    <div mat-line>Unread</div>
+  </mat-list-option>
+
+  <mat-list-option>
+    <mat-icon mat-list-icon>star</mat-icon>
+    <div mat-line>Stared</div>
+  </mat-list-option>
+
+</mat-selection-list>
+
+<mat-divider></mat-divider>
+
+<mat-selection-list [multiple]="false">
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button color="primary" (click)="openDialog()">Add Feed</button>
+  </div>
+  <mat-list-option>
+    <mat-icon mat-list-icon>folder</mat-icon>
+    <div mat-line>BBC world</div>
+    <div mat-line> 2020/12/2020 </div>
+  </mat-list-option>
+  <mat-list-option>
+    <mat-icon mat-list-icon>folder</mat-icon>
+    <div mat-line>BBC world</div>
+    <div mat-line> 2020/12/2020 </div>
+  </mat-list-option>
+  <mat-list-option>
+    <mat-icon mat-list-icon>folder</mat-icon>
+    <div mat-line>BBC world</div>
+    <div mat-line> 2020/12/2020 </div>
+  </mat-list-option>
+</mat-selection-list>

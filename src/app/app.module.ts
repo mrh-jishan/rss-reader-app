@@ -15,6 +15,14 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
+import {PermanentNavDirective} from './permanent-nav.directive';
+import {LeftNavComponent} from './left-nav/left-nav.component';
+import {AddFeedDialogComponent} from './add-feed-dialog/add-feed-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
+import { RssItemComponent } from './rss-item/rss-item.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -23,7 +31,11 @@ import {MatListModule} from "@angular/material/list";
     HomeComponent,
     SettingsComponent,
     LayoutComponent,
-    HeaderComponent
+    HeaderComponent,
+    PermanentNavDirective,
+    LeftNavComponent,
+    AddFeedDialogComponent,
+    RssItemComponent
   ],
   imports: [
     BrowserModule,
@@ -35,8 +47,15 @@ import {MatListModule} from "@angular/material/list";
     MatToolbarModule,
     MatIconModule,
     MatListModule,
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    MatCardModule
   ],
   providers: [],
+  entryComponents: [
+    AddFeedDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

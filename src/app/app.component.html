@@ -1,11 +1,17 @@
 <rss-layout>
+  <rss-header (sidenavToggle)="sidenav.toggle()"></rss-header>
   <mat-sidenav-container>
-    <mat-sidenav #sidenav role="navigation">
-      <rss-side-nav (sidenavClose)="sidenav.close()"></rss-side-nav>
+    <mat-sidenav rssPermanentNav="960" #sidenav mode="side">
+      <rss-side-nav></rss-side-nav>
     </mat-sidenav>
-    <mat-sidenav-content>
-      <rss-header (sidenavToggle)="sidenav.toggle()"></rss-header>
-      <router-outlet></router-outlet>
+    <mat-sidenav-content fxLayout="row"
+                         fxLayoutAlign="space-around start">
+      <div fxFlex="20" class="left-panel" fxFill>
+        <rss-left-nav></rss-left-nav>
+      </div>
+      <div fxFlex="80" class="right-panel" fxFill>
+        <router-outlet></router-outlet>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </rss-layout>
