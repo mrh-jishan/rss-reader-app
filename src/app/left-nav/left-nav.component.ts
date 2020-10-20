@@ -1,25 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AddFeedDialogComponent} from "../add-feed-dialog/add-feed-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {FeedServiceService} from "../feed-service.service";
-import * as xml2js from "xml2js";
 
 @Component({
   selector: 'rss-left-nav',
   templateUrl: './left-nav.component.html',
-  styleUrls: ['./left-nav.component.scss']
+  styleUrls: ['./left-nav.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LeftNavComponent implements OnInit {
 
-  feeds = Array(10)
+  feeds = []
 
   constructor(public dialog: MatDialog,
-              private feedServiceService: FeedServiceService) {}
+              private feedServiceService: FeedServiceService) {
+  }
 
   ngOnInit(): void {
-    this.feedServiceService.getFeedList('http://localhost:8080/http://feeds.bbci.co.uk/news/rss.xml').subscribe(res=>{
-      console.log(res)
-    });
   }
 
   openDialog(): void {

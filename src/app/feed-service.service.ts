@@ -2,11 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, of, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
-import {parseString} from "xml2js";
-
-export interface Feed {
-
-}
+import xml2js from "xml2js";
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +62,8 @@ export class FeedServiceService {
 
   extractFeedList(xml: any) {
     var res;
-     parseString(xml,{trim: true}, (err, result) => {
+    const parser = new xml2js.Parser({explicitArray : false});
+     parser.parseString(xml, (err, result) => {
       console.log(result)
       res = result;
     });
