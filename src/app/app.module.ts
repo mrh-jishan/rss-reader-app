@@ -20,9 +20,13 @@ import {LeftNavComponent} from './left-nav/left-nav.component';
 import {AddFeedDialogComponent} from './add-feed-dialog/add-feed-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { RssItemComponent } from './rss-item/rss-item.component';
 import {MatCardModule} from "@angular/material/card";
+import {HttpClientModule} from "@angular/common/http";
+import { SafeHtmlPipePipe } from './safe-html-pipe.pipe';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatBadgeModule} from "@angular/material/badge";
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import {MatCardModule} from "@angular/material/card";
     PermanentNavDirective,
     LeftNavComponent,
     AddFeedDialogComponent,
-    RssItemComponent
+    RssItemComponent,
+    SafeHtmlPipePipe
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,11 @@ import {MatCardModule} from "@angular/material/card";
     MatDialogModule,
     MatInputModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule,
+    MatMenuModule,
+    MatBadgeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   entryComponents: [

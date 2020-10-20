@@ -1,4 +1,3 @@
-
 <mat-selection-list [multiple]="false">
   <div mat-subheader>Feeder</div>
 
@@ -21,23 +20,32 @@
 
 <mat-divider></mat-divider>
 
-<mat-selection-list [multiple]="false">
-  <div fxLayout="row" fxLayoutAlign="end center">
-    <button mat-button color="primary" (click)="openDialog()">Add Feed</button>
-  </div>
-  <mat-list-option>
-    <mat-icon mat-list-icon>folder</mat-icon>
-    <div mat-line>BBC world</div>
-    <div mat-line> 2020/12/2020 </div>
-  </mat-list-option>
-  <mat-list-option>
-    <mat-icon mat-list-icon>folder</mat-icon>
-    <div mat-line>BBC world</div>
-    <div mat-line> 2020/12/2020 </div>
-  </mat-list-option>
-  <mat-list-option>
-    <mat-icon mat-list-icon>folder</mat-icon>
-    <div mat-line>BBC world</div>
-    <div mat-line> 2020/12/2020 </div>
-  </mat-list-option>
-</mat-selection-list>
+<div fxLayout="row" fxLayoutAlign="end center" class="feed-add-block">
+  <button mat-button color="primary" (click)="openDialog()">Add Feed</button>
+</div>
+<div class="feeds-list">
+  <mat-selection-list [multiple]="false">
+    <mat-list-option *ngFor="let feed of feeds">
+      <mat-icon mat-list-icon>info</mat-icon>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+          <div mat-line>BBC world</div>
+          <div mat-line> 2020/12/2020</div>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon matBadge="15" matBadgeColor="primary" matBadgeOverlap="false">more_vert</mat-icon>
+        </button>
+      </div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Remove Feed</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>update</mat-icon>
+          <span>Reload Feed</span>
+        </button>
+      </mat-menu>
+    </mat-list-option>
+  </mat-selection-list>
+</div>

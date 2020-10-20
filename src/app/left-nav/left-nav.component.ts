@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AddFeedDialogComponent} from "../add-feed-dialog/add-feed-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {FeedServiceService} from "../feed-service.service";
+import * as xml2js from "xml2js";
 
 @Component({
   selector: 'rss-left-nav',
@@ -9,16 +11,21 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class LeftNavComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) {}
+  feeds = Array(10)
+
+  constructor(public dialog: MatDialog,
+              private feedServiceService: FeedServiceService) {}
 
   ngOnInit(): void {
+    this.feedServiceService.getFeedList('http://localhost:8080/http://feeds.bbci.co.uk/news/rss.xml').subscribe(res=>{
+      console.log(res)
+    });
   }
-
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddFeedDialogComponent, {
-      width: '250px',
-      data: {name: 'name is robin', animal: 'cow is animal'}
+      width: '550px',
+      height: '200px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

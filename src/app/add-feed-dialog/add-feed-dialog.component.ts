@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'rss-add-feed-dialog',
@@ -8,15 +9,20 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class AddFeedDialogComponent implements OnInit {
 
-  constructor(
-    public dialogRef: MatDialogRef<AddFeedDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {}
+   form: FormGroup;
+
+  constructor(public dialogRef: MatDialogRef<AddFeedDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data,
+              private fb: FormBuilder) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      url: ['', Validators.compose([Validators.required])]
+    })
   }
 
 
