@@ -3,9 +3,9 @@ import {FeedServiceService} from "../feed-service.service";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../reducers";
 import {tap} from "rxjs/operators";
-import {feeds, selectAllFeeds} from "../redux/feed.selectors";
+import {feeds, selectAllFeeds} from "../redux/feed/feed.selectors";
 import {Observable} from "rxjs";
-import {FeedState} from "../redux/feed.reducer";
+import {FeedState} from "../redux/feed/feed.reducer";
 import {Feed, Item} from "../model/feed";
 
 @Component({

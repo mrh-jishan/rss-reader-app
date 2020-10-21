@@ -6,14 +6,17 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import {environment} from '../../environments/environment';
-import {feedReducer} from '../redux/feed.reducer';
+import {feedReducer} from '../redux/feed/feed.reducer';
+import {itemReducer} from "../redux/item/item.reducer";
 
 export interface AppState {
   feed: any;
+  item: any;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   feed: feedReducer,
+  item: itemReducer,
 };
 
 

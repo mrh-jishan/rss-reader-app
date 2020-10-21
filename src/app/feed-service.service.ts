@@ -28,18 +28,19 @@ export class FeedServiceService {
       });
     });
     localStorage.setItem('feeds', JSON.stringify(uniq));
+    return uniq;
   }
 
-  removeFeedItem(url) {
+  removeFeedItem(feed: lStorage) {
     const feedItem = this.getLocalFeedItems();
-    const index = feedItem.indexOf(url);
+    const index = feedItem.findIndex(i => i.link === feed.link);
     if (index > -1) {
       feedItem.splice(index, 1);
     }
     localStorage.setItem('feeds', JSON.stringify(feedItem));
   }
 
-  getFeedList(url: string): Observable<any> {
+  getFeedListByUrl(url: string): Observable<any> {
     return this.http.get(environment.feeder_url + url, {responseType: 'text'})
       .pipe(
         map(this.extractFeedList),
@@ -74,22 +75,8 @@ export class FeedServiceService {
     parser.parseString(xml, (err, result) => {
       const channel = result.rss.channel;
       const items: Item[] = channel.item.map(item => new Item(item.title, item.description, item.pubDate, item.link));
-      res = new Feed(channel.link, channel.title, channel.lastBuildDate, channel.description, channel.image.url, items);
+      res = new Feed(channel.link, channel.title, channel.lastBuildDate, channel.description, items);
     });
     return res;
-  }
-
-  updateFeeder(url: string) {
-    this.getFeedList(url).subscribe(res => {
-      const obj: lStorage = {
-        link: url,
-        title: res.title,
-        image: res.image
-      }
-      this.saveLocalFeedItems(obj);
-    });
-  }
-  reloadFeed(feed: any) {
-
   }
 }

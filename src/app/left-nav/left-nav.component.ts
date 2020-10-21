@@ -7,7 +7,11 @@ import {select, Store} from "@ngrx/store";
 import {AppState} from "../reducers";
 // import {loadFeed, loadFeedByUrl} from "../redux/feed.actions";
 import {tap} from "rxjs/operators";
-import {feeds} from "../redux/feed.selectors";
+import {feeds} from "../redux/feed/feed.selectors";
+import {noop, Observable} from "rxjs";
+import {addStorage, removeStorage} from "../redux/item/item.actions";
+import {addItemFeed, initDataLoad} from "../redux/feed/feed.actions";
+import {selectAllItem} from "../redux/item/item.selectors";
 
 @Component({
   selector: 'rss-left-nav',
@@ -17,7 +21,7 @@ import {feeds} from "../redux/feed.selectors";
 })
 export class LeftNavComponent implements OnInit {
 
-  feeds: lStorage[] = []
+  lStore: Observable<lStorage[]>;
 
   constructor(public dialog: MatDialog,
               private store: Store<AppState>,
@@ -25,11 +29,8 @@ export class LeftNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.pipe(
-      select(feeds),
-      tap(channel => {
-        console.log('feeds data: ', channel)
-      })
+    this.lStore = this.store.pipe(
+      select(selectAllItem)
     )
   }
 
@@ -38,16 +39,39 @@ export class LeftNavComponent implements OnInit {
       width: '550px',
       height: '200px'
     }).afterClosed().subscribe(result => {
-      this.feedServiceService.updateFeeder(result.url);
+      this.feedServiceService.getFeedListByUrl(result.url).pipe(
+        tap(data => {
+          const obj: lStorage = {
+            link: result.url,
+            title: data.title,
+            image: data.image
+          }
+          this.feedServiceService.saveLocalFeedItems(obj);
+          this.store.dispatch(addStorage({item: obj}));
+          this.store.dispatch(addItemFeed({item: data.item}))
+        })
+      ).subscribe(
+        noop,
+        () => alert('Failed to add url...')
+      );
     });
   }
 
   removeFeed(feed: lStorage) {
+    this.store.dispatch(removeStorage({item: feed}));
     this.feedServiceService.removeFeedItem(feed);
+    this.store.dispatch(initDataLoad());
   }
 
   reloadFeed(feed: lStorage) {
-    this.feedServiceService.reloadFeed(feed);
+    this.feedServiceService.getFeedListByUrl(feed.link).pipe(
+      tap(data => {
+        this.store.dispatch(addItemFeed({item: data.item}))
+      })
+    ).subscribe(
+      noop,
+      () => alert('Failed to load...')
+    );
   }
 
   navigate(feed: lStorage) {

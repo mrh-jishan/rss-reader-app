@@ -10,13 +10,11 @@ export class Feed {
               title: string,
               lastBuildDate: string,
               description: string,
-              image: string,
               item: Item[]) {
     this.link = link;
     this.title = title;
     this.lastBuildDate = lastBuildDate;
     this.description = description;
-    this.image = image;
     this.item = item;
   }
 }

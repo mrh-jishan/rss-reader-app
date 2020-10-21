@@ -27,12 +27,13 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatBadgeModule} from "@angular/material/badge";
 import {Store, StoreModule} from '@ngrx/store';
-import {reducers, metaReducers, AppState} from './reducers';
+import {AppState, metaReducers, reducers} from './reducers';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
 import {AppEffects} from './app.effects';
-import {initDataLoad} from "./redux/feed.actions";
+import {initDataLoad} from "./redux/feed/feed.actions";
+import {initStorage} from "./redux/item/item.actions";
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {initDataLoad} from "./redux/feed.actions";
       provide: APP_INITIALIZER,
       useFactory: (store: Store<AppState>) => {
         return () => {
+          store.dispatch(initStorage());
           store.dispatch(initDataLoad());
         };
       },
