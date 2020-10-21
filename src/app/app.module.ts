@@ -34,6 +34,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {AppEffects} from './app.effects';
 import {initDataLoad} from "./redux/feed/feed.actions";
 import {initStorage} from "./redux/item/item.actions";
+import { SafeHtmlPipePipe } from './safe-html-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {initStorage} from "./redux/item/item.actions";
     LeftNavComponent,
     AddFeedDialogComponent,
     RssItemComponent,
+    SafeHtmlPipePipe,
   ],
   imports: [
     BrowserModule,

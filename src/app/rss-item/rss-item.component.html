@@ -2,9 +2,7 @@
   <mat-card-content>
     <mat-card-title>{{item.title}} </mat-card-title>
     <mat-card-subtitle>{{item.pubDate | date :'medium'}}</mat-card-subtitle>
-    <p>
-      {{item.description}}
-    </p>
+    <p [innerHTML]="item.description | safeHtmlPipe"></p>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
     <button mat-icon-button (click)="visited(item)">
