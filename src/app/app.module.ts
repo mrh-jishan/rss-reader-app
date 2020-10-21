@@ -34,8 +34,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {AppEffects} from './app.effects';
 import {initDataLoad} from "./redux/feed/feed.actions";
 import {initStorage} from "./redux/item/item.actions";
-import { SafeHtmlPipePipe } from './safe-html-pipe.pipe';
-import {InViewportModule} from "ng-in-viewport";
+import {SafeHtmlPipePipe} from './safe-html-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -72,7 +71,6 @@ import {InViewportModule} from "ng-in-viewport";
     StoreModule.forRoot(reducers, {metaReducers}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
-    InViewportModule
   ],
   providers: [
     {
