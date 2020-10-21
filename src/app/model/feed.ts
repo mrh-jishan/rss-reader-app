@@ -25,6 +25,7 @@ export class Item {
   pubDate: string;
   link: string;
   visited: boolean;
+  viewed: boolean;
 
   constructor(title: string, description: string, pubDate: string, link: string) {
     this.title = title;
@@ -32,6 +33,7 @@ export class Item {
     this.pubDate = pubDate;
     this.link = link;
     this.visited = false;
+    this.viewed =false;
   }
 }
 

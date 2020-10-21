@@ -1,3 +1,7 @@
 <div class="rss-item" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
-  <rss-rss-item *ngFor="let item of feed$ | async"  [item]="item" class="rss-item-content"></rss-rss-item>
+  <rss-rss-item
+    (click)="onIntersection(item)"
+    *ngFor="let item of feed$ | async"
+    [item]="item"
+    class="rss-item-content"></rss-rss-item>
 </div>

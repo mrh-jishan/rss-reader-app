@@ -5,6 +5,10 @@
     <p [innerHTML]="item.description | safeHtmlPipe"></p>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-icon-button *ngIf="item.viewed">
+      <mat-icon color="primary">done_all</mat-icon>
+    </button>
+
     <button mat-icon-button (click)="visited(item)">
       <mat-icon color="primary"> {{item.visited ? 'favorite' : 'favorite_border'}}</mat-icon>
     </button>

@@ -1,5 +1,5 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import {addItemFeed, itemClicked, loadFeed} from './feed.actions';
+import {addItemFeed, itemClicked, itemOnViewport, loadFeed} from './feed.actions';
 import {createEntityAdapter, EntityAdapter, EntityState} from "@ngrx/entity";
 import {Item} from "../../model/feed";
 
@@ -33,7 +33,9 @@ const _feedReducer = createReducer(initialState,
   on(loadFeed, (state, {item}) => adapter.setAll(item, state)),
   on(addItemFeed, (state, {item}) => adapter.addMany(item, state)),
   on(itemClicked, (state, {item}) => adapter.updateOne(
-    {id: item.link, changes: {...item, visited: true}}, state))
+    {id: item.link, changes: {...item, visited: true}}, state)),
+  on(itemOnViewport, (state, {item}) => adapter.updateOne(
+    {id: item.link, changes: {...item, viewed: true}}, state))
 );
 
 export function feedReducer(state: FeedState, action: Action) {

@@ -35,6 +35,7 @@ import {AppEffects} from './app.effects';
 import {initDataLoad} from "./redux/feed/feed.actions";
 import {initStorage} from "./redux/item/item.actions";
 import { SafeHtmlPipePipe } from './safe-html-pipe.pipe';
+import {InViewportModule} from "ng-in-viewport";
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { SafeHtmlPipePipe } from './safe-html-pipe.pipe';
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, {metaReducers}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects])
+    EffectsModule.forRoot([AppEffects]),
+    InViewportModule
   ],
   providers: [
     {
