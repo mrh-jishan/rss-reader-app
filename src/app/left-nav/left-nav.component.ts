@@ -2,12 +2,10 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AddFeedDialogComponent} from "../add-feed-dialog/add-feed-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {FeedServiceService} from "../feed-service.service";
-import {Feed, lStorage} from "../model/feed";
+import {lStorage} from "../model/feed";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../reducers";
-// import {loadFeed, loadFeedByUrl} from "../redux/feed.actions";
 import {tap} from "rxjs/operators";
-import {feeds} from "../redux/feed/feed.selectors";
 import {noop, Observable} from "rxjs";
 import {addStorage, removeStorage} from "../redux/item/item.actions";
 import {addItemFeed, initDataLoad} from "../redux/feed/feed.actions";
@@ -74,7 +72,11 @@ export class LeftNavComponent implements OnInit {
     );
   }
 
+  filterPosts(all: string) {
+    
+  }
+
   navigate(feed: lStorage) {
-    // this.store.dispatch(loadFeedByUrl({feed: feed}))
+    
   }
 }

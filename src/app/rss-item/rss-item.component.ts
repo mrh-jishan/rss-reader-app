@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {AppState} from "../reducers";
-import {itemClicked} from "../redux/feed/feed.actions";
+import {itemClicked, itemOnViewport} from "../redux/feed/feed.actions";
 import {Item} from "../model/feed";
 
 @Component({
@@ -19,7 +19,7 @@ export class RssItemComponent implements OnInit {
   }
 
   open(item: Item) {
-    this.store.dispatch(itemClicked({item: item}))
+    this.store.dispatch(itemOnViewport({item: item}))
     window.open(item.link)
   }
 
