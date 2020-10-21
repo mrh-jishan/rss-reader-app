@@ -1,4 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+import {AppState} from "../reducers";
+import {itemClicked} from "../redux/feed.actions";
+import {Item} from "../model/feed";
 
 @Component({
   selector: 'rss-rss-item',
@@ -7,14 +11,19 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class RssItemComponent implements OnInit {
 
-  @Input("item") item;
+  @Input("item") item: Item;
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
   }
 
-  open(link) {
-    window.open(link)
+  open(item: Item) {
+    this.store.dispatch(itemClicked({item: item}))
+    window.open(item.link)
+  }
+
+  visited(item: Item) {
+    this.store.dispatch(itemClicked({item: item}))
   }
 }

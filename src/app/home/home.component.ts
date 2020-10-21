@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FeedServiceService} from "../feed-service.service";
+import {select, Store} from "@ngrx/store";
+import {AppState} from "../reducers";
+import {tap} from "rxjs/operators";
+import {feeds, selectAllFeeds} from "../redux/feed.selectors";
+import {Observable} from "rxjs";
+import {FeedState} from "../redux/feed.reducer";
+import {Feed, Item} from "../model/feed";
 
 @Component({
   selector: 'rss-home',
@@ -8,17 +15,15 @@ import {FeedServiceService} from "../feed-service.service";
 })
 export class HomeComponent implements OnInit {
 
-  feeds = [];
+  feed$: Observable<Item[]>;
 
-  constructor(private feedServiceService: FeedServiceService) {
+  constructor(private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
-    this.feedServiceService.loadFeedList().subscribe(res => {
-      res.forEach(data => {
-        this.feeds = this.feeds.concat(data.rss.channel.item);
-      });
-    });
+    this.feed$ = this.store.pipe(
+      select(selectAllFeeds)
+    );
   }
 
 }

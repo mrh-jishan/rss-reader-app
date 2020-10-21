@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -26,12 +26,13 @@ import {MatCardModule} from "@angular/material/card";
 import {HttpClientModule} from "@angular/common/http";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatBadgeModule} from "@angular/material/badge";
-import {StoreModule} from '@ngrx/store';
-import {reducers, metaReducers} from './reducers';
+import {Store, StoreModule} from '@ngrx/store';
+import {reducers, metaReducers, AppState} from './reducers';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
 import {AppEffects} from './app.effects';
+import {initDataLoad} from "./redux/feed.actions";
 
 @NgModule({
   declarations: [
@@ -68,7 +69,18 @@ import {AppEffects} from './app.effects';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (store: Store<AppState>) => {
+        return () => {
+          store.dispatch(initDataLoad());
+        };
+      },
+      multi: true,
+      deps: [Store]
+    }
+  ],
   entryComponents: [
     AddFeedDialogComponent
   ],

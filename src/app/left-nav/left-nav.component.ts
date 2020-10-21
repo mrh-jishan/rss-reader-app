@@ -2,7 +2,12 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AddFeedDialogComponent} from "../add-feed-dialog/add-feed-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {FeedServiceService} from "../feed-service.service";
-import {Feed} from "../model/feed";
+import {Feed, lStorage} from "../model/feed";
+import {select, Store} from "@ngrx/store";
+import {AppState} from "../reducers";
+// import {loadFeed, loadFeedByUrl} from "../redux/feed.actions";
+import {tap} from "rxjs/operators";
+import {feeds} from "../redux/feed.selectors";
 
 @Component({
   selector: 'rss-left-nav',
@@ -12,14 +17,20 @@ import {Feed} from "../model/feed";
 })
 export class LeftNavComponent implements OnInit {
 
-  feeds: Feed[] = []
+  feeds: lStorage[] = []
 
   constructor(public dialog: MatDialog,
+              private store: Store<AppState>,
               private feedServiceService: FeedServiceService) {
   }
 
   ngOnInit(): void {
-    this.feeds = this.feedServiceService.getLocalFeedItems();
+    this.store.pipe(
+      select(feeds),
+      tap(channel => {
+        console.log('feeds data: ', channel)
+      })
+    )
   }
 
   openDialog(): void {
@@ -31,17 +42,15 @@ export class LeftNavComponent implements OnInit {
     });
   }
 
-  removeFeed(feed: Feed) {
+  removeFeed(feed: lStorage) {
     this.feedServiceService.removeFeedItem(feed);
   }
 
-  reloadFeed(feed: Feed) {
+  reloadFeed(feed: lStorage) {
     this.feedServiceService.reloadFeed(feed);
   }
 
-  navigate(feed: Feed) {
-    this.feedServiceService.getFeedList(feed.url).subscribe(res=>{
-      console.log(res);
-    });
+  navigate(feed: lStorage) {
+    // this.store.dispatch(loadFeedByUrl({feed: feed}))
   }
 }

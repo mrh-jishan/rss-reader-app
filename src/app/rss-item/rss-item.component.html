@@ -1,14 +1,15 @@
 <mat-card class="example-card">
   <mat-card-content>
-    <mat-card-title>{{item.title}}</mat-card-title>
-    <mat-card-subtitle>{{item['dc:creator']}}</mat-card-subtitle>
+    <mat-card-title>{{item.title}} </mat-card-title>
+    <mat-card-subtitle>{{item.pubDate | date :'medium'}}</mat-card-subtitle>
     <p>
       {{item.description}}
     </p>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-    <button mat-raised-button color="primary" (click)="open(item.link)">VISIT</button>
+    <button mat-icon-button (click)="visited(item)">
+      <mat-icon color="primary"> {{item.visited ? 'favorite' : 'favorite_border'}}</mat-icon>
+    </button>
+    <button mat-raised-button color="primary" (click)="open(item)">VISIT</button>
   </mat-card-actions>
 </mat-card>

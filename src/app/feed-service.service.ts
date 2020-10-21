@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {forkJoin, Observable, of, throwError} from "rxjs";
+import {forkJoin, Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import xml2js from "xml2js";
 import {environment} from "../environments/environment";
-import {Feed} from "./model/feed";
+import {Feed, Item, lStorage} from "./model/feed";
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,11 @@ export class FeedServiceService {
   constructor(private http: HttpClient) {
   }
 
-  getLocalFeedItems(): Feed[] {
+  getLocalFeedItems(): lStorage[] {
     return JSON.parse(localStorage.getItem('feeds')) || [];
   }
 
-  saveLocalFeedItems(obj: Feed) {
+  saveLocalFeedItems(obj: lStorage) {
     const feedItem = this.getLocalFeedItems();
     feedItem.push(obj);
     const uniq = feedItem.filter((item, index, self) => {
@@ -27,7 +27,6 @@ export class FeedServiceService {
         return JSON.stringify(obj) === _item;
       });
     });
-
     localStorage.setItem('feeds', JSON.stringify(uniq));
   }
 
@@ -50,9 +49,10 @@ export class FeedServiceService {
 
   loadFeedList(): Observable<any> {
     const feedList = this.getLocalFeedItems();
-    const obsList = feedList.map(feed => this.http.get(environment.feeder_url + feed.url,
+    const obsList = feedList.map(feed => this.http.get(environment.feeder_url + feed.link,
       {responseType: 'text'})
-      .pipe(map(this.extractFeedList), catchError(this.handlerError)));
+      .pipe(map(this.extractFeedList),
+        catchError(this.handlerError)));
     return forkJoin([...obsList]);
   }
 
@@ -68,28 +68,27 @@ export class FeedServiceService {
     return throwError(errorMsg);
   }
 
-  extractFeedList(xml: any) {
-    var res;
+  extractFeedList(xml: any): Feed {
+    let res: Feed;
     const parser = new xml2js.Parser({explicitArray: false});
     parser.parseString(xml, (err, result) => {
-      res = result;
+      const channel = result.rss.channel;
+      const items: Item[] = channel.item.map(item => new Item(item.title, item.description, item.pubDate, item.link));
+      res = new Feed(channel.link, channel.title, channel.lastBuildDate, channel.description, channel.image.url, items);
     });
     return res;
   }
 
   updateFeeder(url: string) {
     this.getFeedList(url).subscribe(res => {
-      console.log(res);
-      const obj: Feed = {
-        url: url,
-        title: res.rss.channel.title,
-        lastBuildDate: res.rss.channel.lastBuildDate,
+      const obj: lStorage = {
+        link: url,
+        title: res.title,
+        image: res.image
       }
       this.saveLocalFeedItems(obj);
-      console.log('feed updated: ', res)
     });
   }
-
   reloadFeed(feed: any) {
 
   }
