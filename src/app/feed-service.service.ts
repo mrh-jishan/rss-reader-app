@@ -13,14 +13,20 @@ export class FeedServiceService {
   constructor(private http: HttpClient) {
   }
 
-  getLocalFeedItems(): string[] {
+  getLocalFeedItems(): object[] {
     return JSON.parse(localStorage.getItem('feeds')) || [];
   }
 
-  saveLocalFeedItems(url: string) {
+  saveLocalFeedItems(obj: object) {
     const feedItem = this.getLocalFeedItems();
-    feedItem.push(url.trim());
-    const uniq = [...new Set(feedItem)];
+    feedItem.push(obj);
+   const uniq = feedItem.filter((item, index, self) =>{
+     const _item = JSON.stringify(item);
+     return index === feedItem.findIndex(obj => {
+       return JSON.stringify(obj) === _item;
+     });
+   });
+
     localStorage.setItem('feeds', JSON.stringify(uniq));
   }
 
@@ -64,7 +70,13 @@ export class FeedServiceService {
 
   updateFeeder(url: string) {
     this.getFeedList(url).subscribe(res => {
-      this.saveLocalFeedItems(url);
+      console.log(res);
+      const obj = {
+        url: url,
+        title: res.rss.channel.title,
+        lastBuildDate: res.rss.channel.lastBuildDate,
+      }
+      this.saveLocalFeedItems(obj);
       console.log('feed updated: ', res)
     });
   }
