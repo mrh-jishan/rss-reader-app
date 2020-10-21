@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FeedServiceService} from "../feed-service.service";
 
 @Component({
@@ -9,11 +9,15 @@ import {FeedServiceService} from "../feed-service.service";
 export class HomeComponent implements OnInit {
 
   feeds = [];
-  constructor(   private feedServiceService: FeedServiceService) { }
+
+  constructor(private feedServiceService: FeedServiceService) {
+  }
 
   ngOnInit(): void {
-    this.feedServiceService.getFeedList('https://www.smh.com.au/rss/feed.xml').subscribe(res => {
-      this.feeds = res.rss.channel.item;
+    this.feedServiceService.loadFeedList().subscribe(res => {
+      res.forEach(data => {
+        this.feeds = this.feeds.concat(data.rss.channel.item);
+      });
     });
   }
 

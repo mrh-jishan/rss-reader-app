@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, of, throwError} from "rxjs";
+import {forkJoin, Observable, of, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import xml2js from "xml2js";
 import {environment} from "../environments/environment";
+import {Feed} from "./model/feed";
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +14,19 @@ export class FeedServiceService {
   constructor(private http: HttpClient) {
   }
 
-  getLocalFeedItems(): object[] {
+  getLocalFeedItems(): Feed[] {
     return JSON.parse(localStorage.getItem('feeds')) || [];
   }
 
-  saveLocalFeedItems(obj: object) {
+  saveLocalFeedItems(obj: Feed) {
     const feedItem = this.getLocalFeedItems();
     feedItem.push(obj);
-   const uniq = feedItem.filter((item, index, self) =>{
-     const _item = JSON.stringify(item);
-     return index === feedItem.findIndex(obj => {
-       return JSON.stringify(obj) === _item;
-     });
-   });
+    const uniq = feedItem.filter((item, index, self) => {
+      const _item = JSON.stringify(item);
+      return index === feedItem.findIndex(obj => {
+        return JSON.stringify(obj) === _item;
+      });
+    });
 
     localStorage.setItem('feeds', JSON.stringify(uniq));
   }
@@ -45,6 +46,14 @@ export class FeedServiceService {
         map(this.extractFeedList),
         catchError(this.handlerError)
       )
+  }
+
+  loadFeedList(): Observable<any> {
+    const feedList = this.getLocalFeedItems();
+    const obsList = feedList.map(feed => this.http.get(environment.feeder_url + feed.url,
+      {responseType: 'text'})
+      .pipe(map(this.extractFeedList), catchError(this.handlerError)));
+    return forkJoin([...obsList]);
   }
 
   handlerError(error: Response | any) {
@@ -71,7 +80,7 @@ export class FeedServiceService {
   updateFeeder(url: string) {
     this.getFeedList(url).subscribe(res => {
       console.log(res);
-      const obj = {
+      const obj: Feed = {
         url: url,
         title: res.rss.channel.title,
         lastBuildDate: res.rss.channel.lastBuildDate,

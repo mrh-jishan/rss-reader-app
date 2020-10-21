@@ -25,7 +25,7 @@
 </div>
 <div class="feeds-list">
   <mat-selection-list [multiple]="false">
-    <mat-list-option *ngFor="let feed of feeds">
+    <mat-list-option *ngFor="let feed of feeds" (click)="navigate(feed)">
       <mat-icon mat-list-icon>info</mat-icon>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <div style="overflow: hidden">

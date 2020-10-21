@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AddFeedDialogComponent} from "../add-feed-dialog/add-feed-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {FeedServiceService} from "../feed-service.service";
+import {Feed} from "../model/feed";
 
 @Component({
   selector: 'rss-left-nav',
@@ -11,7 +12,7 @@ import {FeedServiceService} from "../feed-service.service";
 })
 export class LeftNavComponent implements OnInit {
 
-  feeds = []
+  feeds: Feed[] = []
 
   constructor(public dialog: MatDialog,
               private feedServiceService: FeedServiceService) {
@@ -30,11 +31,17 @@ export class LeftNavComponent implements OnInit {
     });
   }
 
-  removeFeed(feed: any) {
+  removeFeed(feed: Feed) {
     this.feedServiceService.removeFeedItem(feed);
   }
 
-  reloadFeed(feed: any) {
+  reloadFeed(feed: Feed) {
     this.feedServiceService.reloadFeed(feed);
+  }
+
+  navigate(feed: Feed) {
+    this.feedServiceService.getFeedList(feed.url).subscribe(res=>{
+      console.log(res);
+    });
   }
 }

@@ -6,7 +6,7 @@ import {SettingsComponent} from "./settings/settings.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
-  {path: 'settings',  component: SettingsComponent},
+  {path: 'settings', component: SettingsComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
