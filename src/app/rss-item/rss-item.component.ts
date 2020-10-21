@@ -12,7 +12,6 @@ export class RssItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.item)
   }
 
   open(link) {

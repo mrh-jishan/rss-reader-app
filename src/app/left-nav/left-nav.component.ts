@@ -18,16 +18,23 @@ export class LeftNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.feeds = this.feedServiceService.getLocalFeedItems();
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddFeedDialogComponent, {
+    this.dialog.open(AddFeedDialogComponent, {
       width: '550px',
       height: '200px'
+    }).afterClosed().subscribe(result => {
+      this.feedServiceService.updateFeeder(result.url);
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
+  removeFeed(feed: any) {
+    this.feedServiceService.removeFeedItem(feed);
+  }
+
+  reloadFeed(feed: any) {
+    this.feedServiceService.reloadFeed(feed);
   }
 }

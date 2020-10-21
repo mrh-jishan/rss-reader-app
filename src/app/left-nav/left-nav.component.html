@@ -37,11 +37,11 @@
         </button>
       </div>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="removeFeed(feed)">
           <mat-icon>delete</mat-icon>
           <span>Remove Feed</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="reloadFeed(feed)">
           <mat-icon>update</mat-icon>
           <span>Reload Feed</span>
         </button>

@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(   private feedServiceService: FeedServiceService) { }
 
   ngOnInit(): void {
-    this.feedServiceService.getFeedList('http://localhost:8080/https://www.smh.com.au/rss/feed.xml').subscribe(res => {
+    this.feedServiceService.getFeedList('https://www.smh.com.au/rss/feed.xml').subscribe(res => {
       this.feeds = res.rss.channel.item;
     });
   }
