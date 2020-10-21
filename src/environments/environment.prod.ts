@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  feeder_url: 'https://cors-anywhere.herokuapp.com/'
 };

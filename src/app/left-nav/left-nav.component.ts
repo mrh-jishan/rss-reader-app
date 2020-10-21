@@ -73,10 +73,10 @@ export class LeftNavComponent implements OnInit {
   }
 
   filterPosts(all: string) {
-    
+
   }
 
   navigate(feed: lStorage) {
-    
+
   }
 }
