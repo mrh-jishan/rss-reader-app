@@ -21,18 +21,17 @@ import {AddFeedDialogComponent} from './add-feed-dialog/add-feed-dialog.componen
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { RssItemComponent } from './rss-item/rss-item.component';
+import {RssItemComponent} from './rss-item/rss-item.component';
 import {MatCardModule} from "@angular/material/card";
 import {HttpClientModule} from "@angular/common/http";
-import { SafeHtmlPipePipe } from './safe-html-pipe.pipe';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatBadgeModule} from "@angular/material/badge";
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
-import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './app.effects';
+import {StoreModule} from '@ngrx/store';
+import {reducers, metaReducers} from './reducers';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import {EffectsModule} from '@ngrx/effects';
+import {AppEffects} from './app.effects';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,6 @@ import { AppEffects } from './app.effects';
     LeftNavComponent,
     AddFeedDialogComponent,
     RssItemComponent,
-    SafeHtmlPipePipe
   ],
   imports: [
     BrowserModule,
@@ -66,7 +64,7 @@ import { AppEffects } from './app.effects';
     MatMenuModule,
     MatBadgeModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {metaReducers}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects])
   ],

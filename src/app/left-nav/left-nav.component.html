@@ -28,7 +28,7 @@
     <mat-list-option *ngFor="let feed of feeds">
       <mat-icon mat-list-icon>info</mat-icon>
       <div fxLayout="row" fxLayoutAlign="space-between center">
-        <div>
+        <div style="overflow: hidden">
           <div mat-line>{{feed.title}}</div>
           <div mat-line> {{feed.lastBuildDate | date }}</div>
         </div>
