@@ -71,12 +71,4 @@ export class LeftNavComponent implements OnInit {
       () => alert('Failed to load...')
     );
   }
-
-  filterPosts(all: string) {
-
-  }
-
-  navigate(feed: lStorage) {
-
-  }
 }
