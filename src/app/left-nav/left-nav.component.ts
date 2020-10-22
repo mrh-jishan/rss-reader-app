@@ -37,27 +37,29 @@ export class LeftNavComponent implements OnInit {
       width: '550px',
       height: '200px'
     }).afterClosed().subscribe(result => {
-      this.feedServiceService.getFeedListByUrl(result.url).pipe(
-        tap(data => {
-          const obj: lStorage = {
-            link: result.url,
-            title: data.title,
-            image: data.image
-          }
-          this.feedServiceService.saveLocalFeedItems(obj);
-          this.store.dispatch(addStorage({item: obj}));
-          this.store.dispatch(addItemFeed({item: data.item}))
-        })
-      ).subscribe(
-        noop,
-        () => alert('Failed to add url...')
-      );
+      if (result) {
+        this.feedServiceService.getFeedListByUrl(result.url).pipe(
+          tap(data => {
+            const obj: lStorage = {
+              link: result.url,
+              title: data.title,
+              image: data.image
+            }
+            this.feedServiceService.saveLocalFeedItems(obj);
+            this.store.dispatch(addStorage({item: obj}));
+            this.store.dispatch(addItemFeed({item: data.item}))
+          })
+        ).subscribe(
+          noop,
+          () => alert('Failed to add url...')
+        );
+      }
     });
   }
 
   removeFeed(feed: lStorage) {
-    this.store.dispatch(removeStorage({item: feed}));
     this.feedServiceService.removeFeedItem(feed);
+    this.store.dispatch(removeStorage({item: feed}));
     this.store.dispatch(initDataLoad());
   }
 

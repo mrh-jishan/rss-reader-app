@@ -22,16 +22,17 @@ export class AppEffects {
 
 
   @Effect()
-  init$ = defer(() => this.actions$.pipe(
-    ofType(initDataLoad),
-    mergeMap(() => this.feedServiceService.loadFeedList()
-      .pipe(
-        map(result => {
-          const items = result.flatMap(items => items.item)
-          return loadFeed({item: items})
-        })
-      ))
-  ));
+  init$ = defer(() => {
+    return this.actions$.pipe(
+      ofType(initDataLoad),
+      mergeMap(() => this.feedServiceService.loadFeedList()
+        .pipe(map(result => {
+            const items = result.flatMap(items => items.item)
+            return loadFeed({item: items})
+          })
+        ))
+    );
+  });
 
   constructor(private actions$: Actions,
               private feedServiceService: FeedServiceService) {

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {forkJoin, Observable, throwError} from "rxjs";
+import {forkJoin, Observable, of, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import xml2js from "xml2js";
 import {environment} from "../environments/environment";
@@ -48,13 +48,18 @@ export class FeedServiceService {
       )
   }
 
-  loadFeedList(): Observable<any> {
+  loadFeedList(): Observable<Feed[]> {
     const feedList = this.getLocalFeedItems();
     const obsList = feedList.map(feed => this.http.get(environment.feeder_url + feed.link,
       {responseType: 'text'})
       .pipe(map(this.extractFeedList),
         catchError(this.handlerError)));
-    return forkJoin([...obsList]);
+    if (obsList.length) {
+      return forkJoin([...obsList]);
+    } else {
+      return of([])
+    }
+
   }
 
   handlerError(error: Response | any) {
