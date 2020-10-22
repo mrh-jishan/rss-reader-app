@@ -58,8 +58,8 @@ export class LeftNavComponent implements OnInit {
   }
 
   removeFeed(feed: lStorage) {
-    this.feedServiceService.removeFeedItem(feed);
     this.store.dispatch(removeStorage({item: feed}));
+    this.feedServiceService.removeFeedItem(feed);
     this.store.dispatch(initDataLoad());
   }
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {FeedServiceService} from "./feed-service.service";
-import {initDataLoad, loadFeed} from "./redux/feed/feed.actions";
+import {addItemFeed, initDataLoad, initReloadDataLoad, loadFeed} from "./redux/feed/feed.actions";
 import {map, mergeMap, tap} from "rxjs/operators";
 import {defer} from "rxjs";
 import {initStorage, loadStorage} from "./redux/item/item.actions";
@@ -29,6 +29,19 @@ export class AppEffects {
         .pipe(map(result => {
             const items = result.flatMap(items => items.item)
             return loadFeed({item: items})
+          })
+        ))
+    );
+  });
+
+  @Effect()
+  onReload$ = defer(() => {
+    return this.actions$.pipe(
+      ofType(initReloadDataLoad),
+      mergeMap(() => this.feedServiceService.loadFeedList()
+        .pipe(map(result => {
+            const items = result.flatMap(items => items.item)
+            return addItemFeed({item: items})
           })
         ))
     );

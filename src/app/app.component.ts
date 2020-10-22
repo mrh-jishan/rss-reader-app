@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {AppState} from "./reducers";
-import {initDataLoad} from "./redux/feed/feed.actions";
+import {initReloadDataLoad} from "./redux/feed/feed.actions";
 
 @Component({
   selector: 'rss-root',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     setInterval(() => {
-      this.store.dispatch(initDataLoad());
+      this.store.dispatch(initReloadDataLoad());
     }, 50000);
   }
 }

@@ -48,7 +48,7 @@ export class FeedServiceService {
       )
   }
 
-  loadFeedList(): Observable<Feed[]> {
+  loadFeedList(): Observable<any> {
     const feedList = this.getLocalFeedItems();
     const obsList = feedList.map(feed => this.http.get(environment.feeder_url + feed.link,
       {responseType: 'text'})
