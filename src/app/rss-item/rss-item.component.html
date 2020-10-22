@@ -4,14 +4,21 @@
     <mat-card-subtitle>{{item.pubDate | date :'medium'}}</mat-card-subtitle>
     <p [innerHTML]="item.description | safeHtmlPipe"></p>
   </mat-card-content>
-  <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
-    <button mat-icon-button *ngIf="item.viewed">
-      <mat-icon color="primary">done_all</mat-icon>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-icon-button>
+      <mat-icon color="primary">{{newFeed(item)}}</mat-icon>
     </button>
 
-    <button mat-icon-button (click)="visited(item)">
-      <mat-icon color="primary"> {{item.visited ? 'favorite' : 'favorite_border'}}</mat-icon>
-    </button>
-    <button mat-raised-button color="primary" (click)="open(item)">VISIT</button>
+    <div>
+      <button mat-icon-button *ngIf="item.viewed">
+        <mat-icon color="primary">done_all</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="visited(item)">
+        <mat-icon color="primary"> {{item.visited ? 'favorite' : 'favorite_border'}}</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" (click)="open(item)">VISIT</button>
+    </div>
+
   </mat-card-actions>
 </mat-card>

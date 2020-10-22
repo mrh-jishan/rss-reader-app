@@ -30,8 +30,8 @@ export const adapter: EntityAdapter<Item> = createEntityAdapter<Item>({
 export const initialState = adapter.getInitialState({});
 
 const _feedReducer = createReducer(initialState,
-  on(loadFeed, (state, {item}) => adapter.setAll(item, state)),
-  on(addItemFeed, (state, {item}) => adapter.addMany(item, state)),
+  on(loadFeed, (state, {item}) => adapter.addMany(item, state)),
+  on(addItemFeed, (state, {item}) => adapter.upsertMany(item, state)),
   on(itemClicked, (state, {item}) => adapter.updateOne(
     {id: item.link, changes: {...item, visited: true}}, state)),
   on(itemOnViewport, (state, {item}) => adapter.updateOne(
@@ -42,4 +42,4 @@ export function feedReducer(state: FeedState, action: Action) {
   return _feedReducer(state, action);
 }
 
-export const {selectAll} = adapter.getSelectors();
+export const {selectAll, selectTotal, selectEntities, selectIds} = adapter.getSelectors();

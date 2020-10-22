@@ -13,6 +13,8 @@ export class RssItemComponent implements OnInit {
 
   @Input("item") item: Item;
 
+  currentDate = new Date();
+
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
@@ -25,5 +27,8 @@ export class RssItemComponent implements OnInit {
 
   visited(item: Item) {
     this.store.dispatch(itemClicked({item: item}))
+  }
+  newFeed(item: Item) {
+    return !item.viewed && new Date(item.pubDate).getTime() < new Date().getTime()? 'fiber_new': 'visibility'
   }
 }
