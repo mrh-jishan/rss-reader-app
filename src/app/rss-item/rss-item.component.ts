@@ -13,8 +13,6 @@ export class RssItemComponent implements OnInit {
 
   @Input("item") item: Item;
 
-  currentDate = new Date();
-
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {

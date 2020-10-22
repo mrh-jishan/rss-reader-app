@@ -9,12 +9,13 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AddFeedDialogComponent implements OnInit {
 
-   form: FormGroup;
-   reg: string = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+  form: FormGroup;
+  reg: string = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
   constructor(public dialogRef: MatDialogRef<AddFeedDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data,
-              private fb: FormBuilder) {}
+              @Inject(MAT_DIALOG_DATA) public data,
+              private fb: FormBuilder) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
